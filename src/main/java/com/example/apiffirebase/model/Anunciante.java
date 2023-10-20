@@ -1,15 +1,18 @@
 package com.example.apiffirebase.model;
 
 public class Anunciante {
+    private String id;
     private int iUsuarioId;
+    private String cNome;
     private String cTelefone;
     private String cEmail;
     private String cCep;
     private String cCpf;
     private double nNota;
 
-    public Anunciante(int iUsuarioId, String cTelefone, String cEmail, String cCep, String cCpf, double nNota) {
+    public Anunciante(int iUsuarioId, String cNome,String cTelefone, String cEmail, String cCep, String cCpf, double nNota) {
         this.iUsuarioId = iUsuarioId;
+        this.cNome = cNome;
         this.cTelefone = cTelefone;
         this.cEmail = cEmail;
         this.cCep = cCep;
@@ -17,14 +20,23 @@ public class Anunciante {
         this.nNota = nNota;
     }
 
+    public Anunciante(){}
     public int getiUsuarioId() {
         return iUsuarioId;
     }
+
 
     public void setiUsuarioId(int iUsuarioId) {
         this.iUsuarioId = iUsuarioId;
     }
 
+    public String getcNome(){
+        return cNome;
+    }
+
+    public void setcNome(String cNome){
+        this.cNome = cNome;
+    }
     public String getcTelefone() {
         return cTelefone;
     }
@@ -63,5 +75,13 @@ public class Anunciante {
 
     public void setnNota(double nNota) {
         this.nNota = nNota;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
