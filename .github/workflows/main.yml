@@ -24,13 +24,12 @@ jobs:
       working-directory: ApifFirebase
 
     - name: Render Deploy Action
-      # You may pin to the exact commit or the version.
-      # uses: johnbeynon/render-deploy-action@a0588f9aca995a15d69a72cb2bfbf37c12e5b540
       uses: johnbeynon/render-deploy-action@v0.0.8
       with:
-      # ID of the service to deploy
         service-id: ${{secrets.SERVICE_ID_DEV}}
         api-key: ${{secrets.RENDER_APY_KEY}}
+        distribution: 'auto'  # Você pode especificar sua estratégia de distribuição desejada aqui
+
 
     # - name: Deploy to Render
     #   if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'DEV' && github.event.pull_request.merged_by
