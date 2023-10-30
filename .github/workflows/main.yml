@@ -1,9 +1,8 @@
 name: Deploy to Render
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches: ["*"]
 
 jobs:
   deploy:
@@ -20,7 +19,7 @@ jobs:
 
     - name: Build and package the Spring application
       run: |
-        ./mvnw clean package
+            mvn -B clean package --file pom.xml
       working-directory: ApifFirebase
 
     - name: Render Deploy Action
