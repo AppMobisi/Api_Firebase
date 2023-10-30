@@ -21,7 +21,7 @@ jobs:
 
     - name: Build and package the Spring application
       run: mvn -B clean package --file pom.xml
-      working-directory: ApifFirebase
+    
 
     - name: Render Deploy Action
       uses: johnbeynon/render-deploy-action@v0.0.8
