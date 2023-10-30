@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedOrigins("https://mobisiweb.onrender.com").allowedMethods("GET", "POST", "PUT", "DELETE").allowCredentials(true);
         registry.addMapping("https://apifirebase.onrender.com/**");
         registry.addMapping("https://mobisiweb.onrender.com/**");
     }
