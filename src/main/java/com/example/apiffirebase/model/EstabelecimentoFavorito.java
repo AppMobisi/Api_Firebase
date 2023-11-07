@@ -12,8 +12,9 @@ public class EstabelecimentoFavorito {
     private String state;
     private Integer iTipoEstabelecimento;
     private String cNomeTipoEstabelecimento;
+    private String photo;
 
-    public EstabelecimentoFavorito(Integer iUsuarioId, Integer iEstabelecimentoId, String name, Double score, String cep, String neighborhood, String city, String state, Integer iTipoEstabelecimento, String cNomeTipoEstabelecimento) {
+    public EstabelecimentoFavorito(Integer iUsuarioId, Integer iEstabelecimentoId, String name, Double score, String cep, String neighborhood, String city, String state, Integer iTipoEstabelecimento, String cNomeTipoEstabelecimento, String photo) {
         this.iEstabelecimentoId = iEstabelecimentoId;
         this.iUsuarioId = iUsuarioId;
         this.name = name;
@@ -24,7 +25,11 @@ public class EstabelecimentoFavorito {
         this.state = state;
         this.iTipoEstabelecimento = iTipoEstabelecimento;
         this.cNomeTipoEstabelecimento = cNomeTipoEstabelecimento;
+        this.photo = photo;
     }
+
+
+
 
     public EstabelecimentoFavorito() {
     }
@@ -107,5 +112,13 @@ public class EstabelecimentoFavorito {
 
     public void setcNomeTipoEstabelecimento(String cNomeTipoEstabelecimento) {
         this.cNomeTipoEstabelecimento = cNomeTipoEstabelecimento;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
