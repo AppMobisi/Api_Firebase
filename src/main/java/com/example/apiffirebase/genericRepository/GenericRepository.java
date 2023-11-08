@@ -16,4 +16,5 @@ public interface GenericRepository<T, ID>{
     List<T> findByField(String field, Object value);
 
     List<T> searchByCriteria(Map<String, Object> criteria);
+
 }

@@ -1,0 +1,39 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build and package the Spring application
+      run: mvn -B clean package --file pom.xml
+    
+
+    - name: Render Deploy Action
+      uses: johnbeynon/render-deploy-action@v0.0.8
+      with:
+        service-id: ${{secrets.SERVICE_ID_DEV}}
+        api-key: ${{secrets.RENDER_APY_KEY}}
+        distribution: 'auto'  # Você pode especificar sua estratégia de distribuição desejada aqui
+
+
+    # - name: Deploy to Render
+    #   if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'DEV' && github.event.pull_request.merged_by
+    #   env:
+    #     RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+    #   run: |
+    #     curl -X POST -H "Authorization: Bearer $RENDER_TOKEN" https://api.render.com/v1/services/SERVICE_ID/deploy

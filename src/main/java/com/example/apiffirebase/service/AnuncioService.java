@@ -19,27 +19,31 @@ import java.util.Optional;
 public class AnuncioService {
     private final AnuncioRepository anuncioRepository;
     private final AnuncianteRepository anuncianteRepository;
+    private final AnuncioFavoritoService anuncioFavoritoService;
 
-    private  List<Anuncio> anuncios;
-    private  List<AnuncioDto> anunciosDtos;
+    private  List<Anuncio> anuncios = new ArrayList<>();
+    private  List<AnuncioDto> anunciosDtos = new ArrayList<>();
 
     @Autowired
-    public AnuncioService(AnuncioRepository anuncioRepository, AnuncianteRepository anuncianteRepository)
+    public AnuncioService(AnuncioRepository anuncioRepository, AnuncianteRepository anuncianteRepository, AnuncioFavoritoService anuncioFavoritoService)
     {
         this.anuncioRepository = anuncioRepository;
         this.anuncianteRepository = anuncianteRepository;
+        this.anuncioFavoritoService = anuncioFavoritoService;
     }
 
-    public List<AnuncioDto> getAnuncios(Optional<Integer> TipoDeficiencia ) throws BaseHttpException {
+    public List<AnuncioDto> getAnuncios(Integer iUsuarioId,Optional<Integer> TipoDeficiencia ) throws BaseHttpException {
         try {
+            Limpar();
 
             if (TipoDeficiencia.isPresent()){
-                 anuncios = anuncioRepository.findByField("iTipoDeficiaId", TipoDeficiencia);
+                Integer teste = TipoDeficiencia.get();
+                 anuncios = anuncioRepository.findByField("iTipoDeficienciaId", teste);
             }else {
                 anuncios = anuncioRepository.findAll();
             }
 
-            pegaAnunciantePorAnuncio();
+            pegaAnunciantePorAnuncio(iUsuarioId);
             return anunciosDtos;
         }catch (Exception ex){
             throw HttpExceptionHandler.handleException(ex);
@@ -47,14 +51,14 @@ public class AnuncioService {
     }
 
 
-    public List<Anuncio> getByAnunciante(int anuncianteId){
-        return anuncioRepository.findByField("iAnuncianteId", anuncianteId);
-    }
 
-    public List<AnuncioDto> searchAnuncios(Map<String, Object> criteria) throws BaseHttpException{
+
+
+    public List<AnuncioDto> searchAnuncios(Integer iUsuarioId,Map<String, Object> criteria) throws BaseHttpException{
         try {
+            Limpar();
             anuncios =  anuncioRepository.searchByCriteria(criteria);
-            pegaAnunciantePorAnuncio();
+            pegaAnunciantePorAnuncio(iUsuarioId);
             return anunciosDtos;
         }catch (Exception ex){
           throw   HttpExceptionHandler.handleException(ex);
@@ -63,22 +67,57 @@ public class AnuncioService {
     }
 
 
-    public void pegaAnunciantePorAnuncio() throws BaseHttpException{
+    public void pegaAnunciantePorAnuncio(Integer iUsuarioId) throws BaseHttpException{
         try {
+            Limpar();
             for (Anuncio anuncio : anuncios) {
-                Optional<Anunciante> anuncianteOptional = anuncianteRepository.findById(anuncio.getiAnuncianteId());
-                if (anuncianteOptional.isPresent()) {
-                    Anunciante anunciante = anuncianteOptional.get();
+                List<Anunciante> retorno = anuncianteRepository.findByField("iUsuarioId",anuncio.getiAnuncianteId());
+                Anunciante anunciante = retorno.get(0);
+                boolean favorito = anuncioFavoritoService.verificaFavorito(iUsuarioId, anuncio.id);
+                AnuncioDto anuncioDto = new AnuncioDto(anuncio, anunciante, favorito);
+                anunciosDtos.add(anuncioDto);
 
-                    AnuncioDto anuncioDto = new AnuncioDto(anuncio, anunciante);
-                    anunciosDtos.add(anuncioDto);
-                }
             }
         }catch (Exception ex){
             HttpExceptionHandler.handleException(ex);
         }
     }
 
+    public Anuncio salvar(Anuncio anuncio) throws BaseHttpException{
+        try{
+            anuncio.setcDescricao(anuncio.getcDescricao().toLowerCase());
+            anuncio.setcTitulo(anuncio.getcTitulo().toLowerCase());
+            return anuncioRepository.save(anuncio);
+        }catch (Exception ex){
+           throw  HttpExceptionHandler.handleException(ex);
+        }
+    }
+
+    public Optional<Anuncio> getById(String id) throws  BaseHttpException{
+        try {
+            return anuncioRepository.findById(id);
+
+        }catch (Exception ex){
+            throw HttpExceptionHandler.handleException(ex);
+        }
+    }
+
+    public boolean deleteById(String id) throws BaseHttpException{
+        try{
+            anuncioRepository.deleteById(id);
+            Optional<Anuncio> anuncio = anuncioRepository.findById(id);
+            if (anuncio.isPresent()){
+                return true;
+            }
+            return false;
+
+        }catch (Exception ex){
+            throw HttpExceptionHandler.handleException(ex);
+        }
+    }
 
 
+    public void Limpar(){
+        anunciosDtos.clear();
+    }
 }

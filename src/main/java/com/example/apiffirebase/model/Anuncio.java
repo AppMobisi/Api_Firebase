@@ -1,38 +1,30 @@
 package com.example.apiffirebase.model;
 
 public class Anuncio {
-    private int iId;
-    private byte[] cFoto;
+
+    public String id;
+    private String  cFoto;
     private String cTitulo;
     private String cDescricao;
     private Double nPreco;
-    private int iTipoDeficiencia;
+    private int iTipoDeficienciaId;
     private int iAnuncianteId;
 
-    public Anuncio(int iId, byte[] cFoto, String cTitulo, String cDescricao, Double nPreco,  int iTipoDeficiencia, int iAnuncianteId) {
-        this.iId = iId;
+    public Anuncio( String cFoto, String cTitulo, String cDescricao, Double nPreco,  int iTipoDeficienciaId, int iAnuncianteId) {
         this.cFoto = cFoto;
         this.cTitulo = cTitulo;
         this.cDescricao = cDescricao;
         this.nPreco = nPreco;
-
-        this.iTipoDeficiencia = iTipoDeficiencia;
+        this.iTipoDeficienciaId = iTipoDeficienciaId;
         this.iAnuncianteId = iAnuncianteId;
     }
 
-    public int getiId() {
-        return iId;
-    }
-
-    public void setiId(int iId) {
-        this.iId = iId;
-    }
-
-    public byte[] getcFoto() {
+    public Anuncio(){}
+    public String getcFoto() {
         return cFoto;
     }
 
-    public void setcFoto(byte[] cFoto) {
+    public void setcFoto(String cFoto) {
         this.cFoto = cFoto;
     }
 
@@ -61,13 +53,12 @@ public class Anuncio {
     }
 
 
-
-    public int getiTipoDeficiencia() {
-        return iTipoDeficiencia;
+    public int getiTipoDeficienciaId() {
+        return iTipoDeficienciaId;
     }
 
-    public void setiTipoDeficiencia(int iTipoDeficiencia) {
-        this.iTipoDeficiencia = iTipoDeficiencia;
+    public void setiTipoDeficienciaId(int iTipoDeficienciaId) {
+        this.iTipoDeficienciaId = iTipoDeficienciaId;
     }
 
     public int getiAnuncianteId() {
@@ -79,4 +70,11 @@ public class Anuncio {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
