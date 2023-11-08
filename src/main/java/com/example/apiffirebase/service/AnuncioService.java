@@ -38,7 +38,7 @@ public class AnuncioService {
 
             if (TipoDeficiencia.isPresent()){
                 Integer teste = TipoDeficiencia.get();
-                 anuncios = anuncioRepository.findByField("iTipoDeficiencia", teste);
+                 anuncios = anuncioRepository.findByField("iTipoDeficienciaId", teste);
             }else {
                 anuncios = anuncioRepository.findAll();
             }

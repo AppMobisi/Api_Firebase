@@ -27,7 +27,7 @@ public class AnuncioDto {
         this.cTitulo = anuncio.getcTitulo();
         this.cDescricao = anuncio.getcDescricao();
         this.nPreco = anuncio.getnPreco();
-        this.iTipoDeficiencia = anuncio.getiTipoDeficiencia();
+        this.iTipoDeficiencia = anuncio.getiTipoDeficienciaId();
         this.iAnuncianteId = anuncio.getiAnuncianteId();
         this.cNome = anunciante.getcNome();
         this.cTelefone = anunciante.getcTelefone();

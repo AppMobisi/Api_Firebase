@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstabelecimentoFavoritoService {
@@ -31,9 +32,15 @@ public class EstabelecimentoFavoritoService {
 
     }
 
-    public boolean desfavoritar(HashMap<String, Object> criterios) throws BaseHttpException{
+    public boolean desfavoritar(String cId) throws BaseHttpException{
         try {
-            int desfavoritou =  estabelecimentoFavoritoRepository.deleteByFields(criterios);
+            int desfavoritou = 0;
+            estabelecimentoFavoritoRepository.deleteById(cId);
+            Optional<EstabelecimentoFavorito> estabelecimentoFavorito = estabelecimentoFavoritoRepository.findById(cId);
+
+            if (!estabelecimentoFavorito.isPresent()){
+                desfavoritou = 1;
+            }
 
             if (desfavoritou == 0){
                 return false;
