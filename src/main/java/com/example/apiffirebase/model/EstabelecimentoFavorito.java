@@ -2,6 +2,7 @@ package com.example.apiffirebase.model;
 
 public class EstabelecimentoFavorito {
 
+    private String id;
     private Integer iUsuarioId;
     private String cNome;
     private Double nNota;
@@ -56,5 +57,13 @@ public class EstabelecimentoFavorito {
 
     public void setcFoto(String cFoto) {
         this.cFoto = cFoto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

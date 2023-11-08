@@ -7,15 +7,15 @@ public class Anuncio {
     private String cTitulo;
     private String cDescricao;
     private Double nPreco;
-    private int iTipoDeficiencia;
+    private int iTipoDeficienciaId;
     private int iAnuncianteId;
 
-    public Anuncio( String cFoto, String cTitulo, String cDescricao, Double nPreco,  int iTipoDeficiencia, int iAnuncianteId) {
+    public Anuncio( String cFoto, String cTitulo, String cDescricao, Double nPreco,  int iTipoDeficienciaId, int iAnuncianteId) {
         this.cFoto = cFoto;
         this.cTitulo = cTitulo;
         this.cDescricao = cDescricao;
         this.nPreco = nPreco;
-        this.iTipoDeficiencia = iTipoDeficiencia;
+        this.iTipoDeficienciaId = iTipoDeficienciaId;
         this.iAnuncianteId = iAnuncianteId;
     }
 
@@ -53,13 +53,12 @@ public class Anuncio {
     }
 
 
-
-    public int getiTipoDeficiencia() {
-        return iTipoDeficiencia;
+    public int getiTipoDeficienciaId() {
+        return iTipoDeficienciaId;
     }
 
-    public void setiTipoDeficiencia(int iTipoDeficiencia) {
-        this.iTipoDeficiencia = iTipoDeficiencia;
+    public void setiTipoDeficienciaId(int iTipoDeficienciaId) {
+        this.iTipoDeficienciaId = iTipoDeficienciaId;
     }
 
     public int getiAnuncianteId() {

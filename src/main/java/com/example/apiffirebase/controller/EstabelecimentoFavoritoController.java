@@ -43,15 +43,12 @@ public class EstabelecimentoFavoritoController {
     }
 
     @DeleteMapping("/desfavoritar")
-    public ResponseEntity<ApiResponse> Desfavoritar(@RequestParam Integer iUsuarioId,
-                                                    @RequestParam Integer iEstabelecimentoId){
+    public ResponseEntity<ApiResponse> Desfavoritar(@RequestParam String cId){
         try{
 
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("iUsuarioId", iUsuarioId);
-            map.put("iEstabelecimentoId", iEstabelecimentoId);
 
-            boolean retorno = estabelecimentoFavoritoService.desfavoritar(map);
+
+            boolean retorno = estabelecimentoFavoritoService.desfavoritar(cId);
 
             if (retorno){
                 return ResponseEntity.status(HttpStatus.OK)
