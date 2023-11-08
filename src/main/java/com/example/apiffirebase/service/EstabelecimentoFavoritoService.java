@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class EstabelecimentoFavoritoService {
@@ -40,6 +41,15 @@ public class EstabelecimentoFavoritoService {
                 return true;
             }
         } catch (Exception ex){
+            throw HttpExceptionHandler.handleException(ex);
+        }
+    }
+
+    public List<EstabelecimentoFavorito> getFavoritos(Integer id) throws BaseHttpException{
+        try {
+            List<EstabelecimentoFavorito> estabelecimentoFavoritos = estabelecimentoFavoritoRepository.findByField("iUsuarioId", id);
+            return estabelecimentoFavoritos;
+        }catch (Exception ex){
             throw HttpExceptionHandler.handleException(ex);
         }
     }

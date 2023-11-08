@@ -6,12 +6,14 @@ import com.example.apiffirebase.responses.ApiResponse;
 import com.example.apiffirebase.responses.DefaultResponse;
 import com.example.apiffirebase.responses.ErrorResponse;
 import com.example.apiffirebase.service.EstabelecimentoFavoritoService;
+import com.google.rpc.context.AttributeContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/estabelecimentos")
@@ -58,6 +60,25 @@ public class EstabelecimentoFavoritoController {
 
             return  ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new DefaultResponse<>(404, "Estabelecimento não encontrado"));
+
+        }catch (BaseHttpException ex){
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(new ErrorResponse(ex.getStatusCode(), ex.getMessage()));
+        }
+    }
+
+    @GetMapping("/favoritos/{id}")
+    public ResponseEntity<ApiResponse> GetFavoritosByUsuario(@PathVariable Integer id){
+        try{
+            List<EstabelecimentoFavorito> estabelecimentos = estabelecimentoFavoritoService.getFavoritos(id);
+
+            if (estabelecimentos.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new DefaultResponse<>(404, "Não existe nenhum estabelecimento favoritado"));
+            }
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new DefaultResponse<>(200, estabelecimentos));
 
         }catch (BaseHttpException ex){
             return ResponseEntity.status(ex.getStatusCode())
